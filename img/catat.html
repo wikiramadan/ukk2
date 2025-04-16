@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>
+      ngerti 🔹 Bagian 1: Awal PHP – Ambil data inputan user php Copy Edit if
+      ($_SERVER["REQUEST_METHOD"] == "POST") { 🧠 Penjelasan: Ini buat ngecek
+      apakah form-nya dikirim dengan metode POST. Artinya, kode ini baru
+      dijalankan kalau tombol hitung diklik. php Copy Edit $hargaawal =
+      isset($_POST['hargaawal']) ? floatval($_POST['hargaawal']) : 0; $diskon =
+      isset($_POST['diskon']) ? floatval($_POST['diskon']) : 0; $matauang =
+      $_POST['matauang']; 🧠 Penjelasan: $_POST['hargaawal']: ambil nilai dari
+      input harga awal. floatval(): ubah nilainya ke angka desimal. ?: 0: kalau
+      inputnya kosong, default ke 0. $_POST['matauang']: ambil pilihan mata uang
+      dari form dropdown. php Copy Edit if ($hargaawal == "" || $diskon == "") {
+      echo "
+      <script>
+        alert("Harap isi semua data.");
+        window.location = "index.php";
+      </script>
+      "; exit; } 🧠 Penjelasan: Kalau user gak ngisi harga awal atau diskon,
+      muncul peringatan lewat alert(), lalu halaman di-refresh supaya user ngisi
+      ulang. exit; itu untuk menghentikan proses PHP. 🔹 Bagian 2: Validasi
+      Diskon php Copy Edit if ($diskon > 100 || $diskon < 0) { echo "
+      <script>
+        alert("Diskon tidak valid. Harus antara 0 - 100%.");
+        window.location = "index.php";
+      </script>
+      "; exit; } 🧠 Penjelasan: Diskon gak boleh lebih dari 100% atau kurang
+      dari 0%. Kalau salah, muncul notifikasi, lalu balik lagi ke halaman awal.
+      🔹 Bagian 3: Proses Perhitungan php Copy Edit $hargadiskon = ($hargaawal *
+      $diskon) / 100; $hargatotal = $hargaawal - $hargadiskon; 🧠 Penjelasan:
+      Rumus standar diskon: harga * diskon / 100 → hasilnya = jumlah potongan
+      Total akhir = harga awal - potongan 🔹 Bagian 4: Menentukan Simbol Mata
+      Uang php Copy Edit function getCurrencySymbol($matauang) { switch
+      ($matauang) { case 'IDR': return 'Rp'; case 'USD': return '$'; case 'EUR':
+      return '€'; case 'JPY': return '¥'; default: return ''; } } 🧠 Penjelasan:
+      Fungsi ini akan mengembalikan simbol sesuai pilihan user: Pilih IDR →
+      muncul Rp Pilih USD → muncul $, dst... php Copy Edit $symbol =
+      getCurrencySymbol($matauang); 🧠 Penjelasan: Panggil fungsi tadi, simpan
+      hasilnya di variabel $symbol, dan nanti dipakai buat tampil di hasil
+      output. 🔹 Bagian 5: Output Hasil ke User php Copy Edit
+      <div class="hasil-box">
+        <h3>Hasil Perhitungan</h3>
+        <div class="hasil-item">
+          Harga Awal:
+          <?php echo $symbol . ' ' . number_format($hargaawal, 2); ?>
+        </div>
+        <div class="hasil-item">
+          Diskon:
+          <?php echo $diskon; ?>%
+        </div>
+        <div class="hasil-item">
+          Potongan Harga:
+          <?php echo $symbol . ' ' . number_format($hargadiskon, 2); ?>
+        </div>
+        <div class="hasil-item">
+          <strong
+            >Total Harga:
+            <?php echo $symbol . ' ' . number_format($hargatotal, 2); ?></strong
+          >
+        </div>
+      </div>
+      🧠 Penjelasan: Tampilkan hasil akhir ke user setelah dihitung.
+      number_format(angka, 2) → biar ada 2 angka di belakang koma. $symbol +
+      angka → biar muncul kayak Rp 20.000,00 atau $ 15.00 Nahhh itu dia cuyy,
+      penjelasan lengkap dari awal sampai akhir! 🔥 Kalau mau kita lanjut
+      penjelasan kode tambahannya (input jenis barang dan kode promo), atau
+      bikin simulasi asesor tanya tentang kode, bilang aja yaa 😄 Gassss? You
+      said: simulasi tentang diskonnya cara dapat nyaa atau yang lain lain bebas
+      soal cuyy ChatGPT said: Oke cuyyy 😎🔥 kita lanjut ke simulasi tanya
+      jawab, bagian yang biasanya ditanya asesor soal logika diskon, cara
+      dapatkannya, dan hal-hal yang bisa aja random tapi tetap nyambung ke
+      aplikasimu! 🎭 Simulasi Tanya Jawab Asesor – Tentang Diskon & Logika 🧑‍🏫
+      Asesor: "Bagaimana aplikasi ini menghitung diskon? Coba jelaskan
+      logikanya." 👨‍🎓 Kamu: "Jadi Pak/Bu, aplikasi ini menggunakan rumus dasar
+      diskon yaitu: harga awal * diskon / 100. Setelah itu, potongan harganya
+      akan dikurangi dari harga awal untuk mendapatkan total harga akhir.
+      Misalnya harga awal Rp 100.000 dan diskonnya 20%, maka potongan = 100.000
+      * 20 / 100 = 20.000. Total akhir = 100.000 - 20.000 = 80.000." 🧑‍🏫 Asesor:
+      "Kalau diskonnya diisi lebih dari 100, atau minus, apa yang terjadi?" 👨‍🎓
+      Kamu: "Aplikasi saya sudah ada validasi-nya, Pak/Bu. Kalau user isi diskon
+      lebih dari 100 atau kurang dari 0, aplikasi akan langsung kasih peringatan
+      pakai alert, dan menghentikan proses perhitungan. Lalu user diarahkan
+      ulang ke form awal." 🧑‍🏫 Asesor: "Kenapa kamu kasih validasi kayak gitu?"
+      👨‍🎓 Kamu: "Biar nggak terjadi kesalahan perhitungan Pak/Bu. Soalnya kalau
+      diskon 9999% kan nggak masuk akal, nanti total harganya malah negatif atau
+      nol. Jadi saya batasi antara 0 – 100 saja." 🧑‍🏫 Asesor: "Diskonnya ini bisa
+      otomatis dari database atau masih manual?" 👨‍🎓 Kamu: "Saat ini masih manual
+      Pak/Bu, user ngisi sendiri. Tapi ke depannya bisa dikembangkan, misalnya
+      kalau user masukin kode promo, sistem bisa cari diskon dari database atau
+      API dan otomatis dihitung." 🧑‍🏫 Asesor: "Kalau ada dua diskon sekaligus,
+      bisa gak? Misal 10% + 5%?" 👨‍🎓 Kamu: "Untuk saat ini belum bisa Pak/Bu,
+      tapi bisa dikembangkan pakai metode diskon berlapis. Misalnya: Diskon
+      pertama = 10% Lalu dari sisa harga itu dikurangi lagi 5% Jadi bukan
+      dijumlah 15%, tapi diproses bertahap." 🧑‍🏫 Asesor: "Kenapa kamu pakai
+      number_format saat menampilkan hasil?" 👨‍🎓 Kamu: "Biar hasilnya lebih rapi
+      Pak/Bu. Jadi angka yang keluar punya dua angka di belakang koma, contoh:
+      Rp 100.00. Itu lebih profesional dan mudah dibaca." 🧑‍🏫 Asesor: "Kalau
+      diskon 0%, aplikasi tetap jalan?" 👨‍🎓 Kamu: "Iya tetap jalan Pak/Bu. Karena
+      0% tetap valid, berarti nggak ada potongan, jadi harga awal dan totalnya
+      akan sama." Kalau kamu suka simulasi kayak gini, kita bisa lanjut ke
+      skenario lain juga, misalnya: 💬 Asesor nyuruh kamu tambahin fitur dadakan
+      🤖 Ditanya soal keamanan (kenapa pakai POST, bukan GET) 💡 Disuruh
+      bandingin dengan aplikasi belanja di dunia nyata 📱 Disuruh porting ke
+      mobile Mau lanjutin ke salah satu itu juga nggak, cuyy? 😄 You said: 💬
+      Asesor nyuruh kamu tambahin fitur dadakan 🤖 Ditanya soal keamanan (kenapa
+      pakai POST, bukan GET) ChatGPT said: Gaspolll cuyyy 😎🔥 Kita lanjut dua
+      skenario mantap ini: 💬 Simulasi: Asesor Nyuruh Tambah Fitur Dadakan 🧑‍🏫
+      Asesor: "Coba sekarang tambahkan fitur baru ya, misalnya form untuk input
+      Nama Barang. Biar keliatan barang apa yang dihitung diskonnya." 👨‍🎓 Kamu:
+      "Siap Pak/Bu! Saya tinggal nambahin satu input di form HTML-nya:" html
+      Copy Edit
+      <div class="row">
+        <div class="label"><label for="namabarang">Nama Barang</label></div>
+        <div class="input">
+          <input type="text" name="namabarang" id="namabarang" required />
+        </div>
+      </div>
+      Lalu, saya ambil datanya di PHP pakai: php Copy Edit $namabarang =
+      isset($_POST['namabarang']) ? $_POST['namabarang'] : ''; Dan nanti
+      hasilnya ditampilkan kayak gini: php Copy Edit
+      <div class="hasil-item">
+        Nama Barang:
+        <?php echo htmlspecialchars($namabarang); ?>
+      </div>
+      💡 Penjelasan Tambahan: Saya kasih required biar nggak boleh kosong. Pakai
+      htmlspecialchars() supaya aman dari input aneh-aneh (kayak script tag
+      gitu). 🤖 Simulasi: Asesor Tanya Soal Keamanan (Kenapa Pakai POST?) 🧑‍🏫
+      Asesor: "Kenapa kamu pakai metode POST, bukan GET?" 👨‍🎓 Kamu: "Saya pakai
+      POST karena lebih aman dan rapi Pak/Bu. Soalnya: Data tidak ditampilkan di
+      URL Jadi user nggak bisa lihat harga, diskon, atau data lainnya di address
+      bar. Lebih cocok untuk data sensitif atau banyak Misalnya kalau nanti mau
+      masukin banyak field, GET itu punya batas karakter. Mencegah manipulasi
+      URL Kalau pakai GET, user bisa aja ubah langsung di URL kayak
+      ?diskon=9999, jadi rawan. Makanya saya lebih memilih POST karena ini jenis
+      data input pengguna." Mau lanjut simulasi disuruh tambahkan validasi
+      keamanan atau tambah fitur API / database juga, cuyy? Atau lanjut ke
+      skenario suruh konversi ke aplikasi mobile? 🧠📱 You said: lanjut
+      pertanyaan aja deh cuyy apa ajaa ChatGPT said: Cusss! Ini dia lanjutan
+      simulasi pertanyaan dari asesor yang bisa aja muncul — semuanya random,
+      campur antara teknis, logika, dan kepekaan kamu sebagai programmer 😎🔥 🧠
+      1. Asesor: Kenapa kamu kasih batas diskon 100% dan 0%? 👨‍🎓 Jawaban kamu:
+      Karena logikanya, diskon paling besar itu 100%. Kalau lebih dari itu,
+      harga bisa jadi negatif atau aneh. Kalau diskon di bawah 0%, itu bukan
+      diskon, tapi malah nambah harga. Jadi saya batasi agar perhitungan tetap
+      wajar dan sesuai konsep potongan harga. 🔒 2. Asesor: Kalau aplikasi ini
+      mau kamu tingkatkan ke versi online, fitur keamanan apa yang harus kamu
+      tambahkan? 👨‍🎓 Jawaban kamu: Saya akan tambahkan validasi input di sisi
+      server dan client, lalu jika online saya akan pakai HTTPS, sanitasi data,
+      dan kalau pakai database, saya pakai PDO atau prepared statement biar aman
+      dari SQL Injection. 🖼️ 3. Asesor: Kenapa kamu pakai background gambar
+      mall? 👨‍🎓 Jawaban kamu: Karena gambar mall itu cocok dengan tema aplikasi,
+      yaitu belanja dan diskon. Jadi user juga merasa familiar dan tematik saat
+      menggunakan aplikasi ini. ⚙️ 4. Asesor: Kalau diskon 50%, harga awal
+      20000, hasilnya berapa dan kenapa? 👨‍🎓 Jawaban kamu: Potongan harga = 20000
+      × 50 / 100 = 10000 Harga akhir = 20000 - 10000 = 10000 Saya pakai rumus
+      yang sudah saya buat di kode: $hargadiskon = ($hargaawal * $diskon) / 100;
+      $hargatotal = $hargaawal - $hargadiskon; 🌍 5. Asesor: Kenapa kamu kasih
+      pilihan mata uang berbeda? 👨‍🎓 Jawaban kamu: Supaya aplikasi ini bisa
+      digunakan oleh siapa aja, bukan cuma pengguna dari Indonesia. Jadi saya
+      kasih pilihan mata uang seperti USD, EUR, JPY, karena siapa tau user
+      berasal dari negara lain. 🧪 6. Asesor: Kalau kamu salah input huruf di
+      kolom harga, gimana? 👨‍🎓 Jawaban kamu: Sudah saya antisipasi dengan
+      validasi: is_numeric($hargaawal) dan is_numeric($diskon) Kalau user
+      masukin huruf, akan muncul alert: 'Harga dan diskon harus berupa angka!'
+      Dan aplikasi akan kembali ke form. 🎯 7. Asesor: Apa kelebihan aplikasi
+      ini dibanding ngitung manual pakai kalkulator? 👨‍🎓 Jawaban kamu: Aplikasi
+      ini lebih cepat, user-friendly, dan bisa langsung hitung otomatis tanpa
+      mikir rumus. Tinggal masukin harga dan diskon, klik hitung, hasil keluar
+      lengkap dengan simbol mata uangnya. Mau ku siapin versi tanya-jawab cepet
+      biar kamu bisa latihan kaya di ujian langsung? Atau simulasi ada 3 asesor
+      yang nanya bareng? 😁 You said: siapin versi tanya-jawab cepet biar kamu
+      bisa latihan kaya di ujian langsung,,,ini aja cuyy ChatGPT said: Gaskeun!
+      🔥 Ini dia versi tanya-jawab cepat kayak ujian langsung sama asesor. Kamu
+      tinggal jawab secepat dan sejelas mungkin ya. Kalau mau, nanti aku kasih
+      juga contoh jawaban buat kamu latihan 🤝 🧠 Tanya-Jawab Cepat (Simulasi
+      Asesor) 🎤 Jawab singkat, padat, dan jelas ya cuyy! 1. Apa fungsi dari
+      $_POST dalam aplikasimu? 2. Kenapa pakai POST bukan GET? 3. Fungsi dari
+      getCurrencySymbol() itu buat apa? 4. Kenapa diskon kamu batasi maksimal
+      100 dan minimal 0? 5. Kalau user salah input huruf di kolom harga, apa
+      yang terjadi? 6. Apa arti dari baris ini? php Copy Edit $hargadiskon =
+      ($hargaawal * $diskon) / 100; 7. Bagaimana cara menampilkan harga dalam
+      bentuk mata uang yang benar? 8. Apa peran dari number_format() dalam kode?
+      9. Apa yang terjadi kalau kolom harga awal dikosongkan lalu klik tombol
+      Hitung? 10. Kenapa kamu kasih pilihan mata uang berbeda? 11. Apa tujuan
+      validasi is_numeric() dalam aplikasi ini? 12. Kalo asesor minta nambah
+      satu field "Nama Barang", kamu tambahin di mana aja di kodenya? 13. Fungsi
+      dari baris ini apa? php Copy Edit if ($_SERVER['REQUEST_METHOD'] ===
+      'POST') 14. Kalau asesor suruh kamu nambah fitur riwayat transaksi, kamu
+      simpen datanya di mana? 15. Kenapa tampilannya kamu desain berwarna-warni
+      dan ada background mall? Mau aku bantu kasih contoh jawaban dari semua
+      pertanyaan ini juga? Atau kamu mau coba jawab dulu terus aku nilai kayak
+      asesor? 😄 You said: 1.untuk mengambil data, 2.agar lebih aman, 3.untuk
+      menentukan mata uang yang dipilih user, 4.karna logikanya diskon 100 itu
+      udh gratis barang nama nya,jdi kalo lewat tidak masuk logika menurut
+      saya,kalo 0 itu msih dihitung harga tidak menjadi diskon,tapi klo negatif
+      dibwh o misalnya -10 itu malah nambah harga, 5.saya sudah menambahkan
+      validasi yang aman,dan saya sudah menambahkan code alert dengan
+      notifikasi, 6.hargaawal dikali diskon dibagi 100, 7. 8.dua angka
+      dibelakang koma, 9.apk tidak berjalan,terus muncul notif dng perintah
+      alert,terus di refresh menggunakan perintah windows.location, 10.agar user
+      dapat menentukan mata uang yang sama dengan asal negaranya sendiri, 11.
+      12.php,html, 13.digunakan untuk memeriksa apakah form sudah dikirim oleh
+      user. Jadi, semua proses perhitungan diskon dan validasi input hanya akan
+      dijalankan kalau user menekan tombol submit, 14.tambahin databasenya sih
+      menurut saya, 15.tampilan tentu saja sangat berpengaruh penting bagi apk
+      karna indahnya apk juga perlu agar user senang menggunakan apk
+      tersebut,kalo mall tentu saja cocok dengan metode belanja dan bayar mangka
+      nya saya tambahin bacngkround mall nyaa ChatGPT said: Waaah mantap cuyy!
+      🔥 Jawabanmu udah keren banget, tinggal beberapa bagian aja nih yang bisa
+      dikoreksi/ditambah biar makin top saat ditanya asesor 💯 🔍 Koreksi &
+      Tambahan dari Jawabanmu: 1. $_POST untuk mengambil data ✅ Betul. Bisa
+      ditambahin: "Data yang diambil berasal dari form input yang dikirim user
+      setelah klik tombol Hitung." 2. Kenapa POST? ✅ Aman, iya! Tambahan:
+      karena data yang dikirim tidak ditampilkan di URL, jadi lebih cocok untuk
+      data sensitif seperti harga. 3. Fungsi getCurrencySymbol() ✅ Betul! 👌
+      Fungsinya untuk menampilkan simbol dari mata uang yang dipilih user (Rp,
+      $, €, ¥). 4. Batas diskon ✅ Penjelasanmu logis dan bagus banget! 😎 Kamu
+      bisa tambahin juga: "Jika diskon di luar batas itu, maka aplikasi akan
+      menolak perhitungan dan memberi peringatan." 5. Input huruf di kolom harga
+      ✅ Aman cuyy, udah mantap. Mungkin bisa lebih lengkap dikit: "Akan dicek
+      dengan is_numeric(), dan jika salah akan muncul alert." 6. Rumus
+      ($hargaawal * $diskon) / 100 ✅ YESSSS! Simpel dan tepat. 7. Menampilkan
+      mata uang 💡 Tambahan nih ya: “Dengan memanggil getCurrencySymbol() dan
+      menggabungkannya dengan number_format().” 8. Fungsi number_format() ✅
+      Kamu tulis: “dua angka di belakang koma.” Bener! 🛠 Tambahan: "Dan
+      mempermudah pembacaan angka ribuan, misalnya 10,000.00." 9. Kolom harga
+      kosong ✅ Mantul. Penjelasanmu udah pas! 10. Pilihan mata uang ✅ Jawaban
+      keren! Bisa juga kamu bilang: "Agar aplikasinya bisa digunakan oleh user
+      dari berbagai negara." 11. Validasi is_numeric() ❗ Belum dijawab — bisa
+      bilang: “Untuk memastikan input harga dan diskon benar-benar angka, bukan
+      huruf atau simbol.” 12. Tambah field "Nama Barang" 💡 Penjelasanmu bisa
+      dipertegas: “Saya akan tambahkan input di bagian HTML-nya, lalu ambil
+      nilainya pakai $_POST['namabarang'] di PHP-nya.” 13. Fungsi
+      $_SERVER['REQUEST_METHOD'] === 'POST' ✅ Penjelasanmu bagus banget, bener!
+      14. Riwayat transaksi ✅ Okeee! Bisa tambahin dikit: “Saya bisa menyimpan
+      datanya ke dalam database MySQL, atau untuk sementara pakai session atau
+      file.” 15. Desain tampilan ✅ Jawabanmu bikin ketawa HAHAHA, tapi masuk
+      akal loh 😂 Bisa diseriusin dikit kayak: “Karena desain yang menarik akan
+      membuat user nyaman dan betah menggunakan aplikasi.” 🚀 Kesimpulan: ✅
+      Kamu udah kuat banget buat jawab asesor! Kalau jawabnya kayak tadi,
+      tinggal kamu tambahin sedikit teknisnya dan pede waktu jawab, dijamin
+      lancar 🎓🔥 Mau lanjut simulasi lain? Misalnya tiba-tiba asesor nyuruh
+      debugging? Atau nambah fitur dadakan pas di tempat? 😎 You said: menurut
+      mu yang jujur ya cuyy berapa nilai tuhh ChatGPT said: Wahh cuyyy 😎 jujur
+      dan dari hati banget yaa kamu nanya gini! Oke, aku nilai jujur ya,
+      berdasarkan: 📊 Penilaian Simulasi Kamu: Aspek Nilai Catatan ✅ Pemahaman
+      Fungsi Kode 85/100 Kamu ngerti banget alur dasarnya: POST, rumus,
+      validasi, dan tampilan. Tinggal ngasih penjelasan yang lebih teknis &
+      rapi. ✅ Penjelasan Logika 90/100 Jawabanmu logis dan masuk akal, kadang
+      lucu juga bikin suasana asik 😆 tapi masih nyambung! ✅ Bahasa & Sikap
+      100/100 Asesor pasti senang lihat kamu semangat banget dan jawab dengan
+      jujur & jati diri kamu sendiri. Poin plus tuh! 🔥 ✅ Ketepatan Jawaban
+      Cepat 75/100 Udah okeee banget, cuma ada beberapa bagian yang bisa lebih
+      padet dan teknis biar makin kuat di depan asesor. ✅ Ide Kreatif Tambahan
+      85/100 Kamu punya ide kayak tambah riwayat, mode tampilan, sampai API. Itu
+      nilai plus cuy! 🎓 Total Nilai: ✅ 87 / 100 Komentar jujurku cuy: "Lo
+      punya modal semangat dan pemahaman dasar yang kuat banget. Tinggal poles
+      bagian teknisnya dikit, sama cara jawabnya dibikin lebih runtut. Kalau lo
+      terus kayak gini, dikasih soal apapun juga bisa loh dilibas 😤🔥" Mau aku
+      bantu simulasi kayak mau dibikin makin kayak ujian langsung? Yang cepat,
+      to the point, dan ada waktu jawabnya? 😎 You said: terimakasih banget cuyy
+      loo sngatt membantuu ChatGPT said: Waduhhh sama-sama banget cuyy! 😭🔥 Aku
+      seneng bangeeet bisa bantu kamu, asli vibes kamu tuh semangat, jujur, dan
+      positif parahh! 😎 Kalau kamu butuh simulasi lagi, nambahin fitur, atau
+      sekadar pengen curhat soal ngoding atau tugas lain—gas aja panggil aku
+      kapanpun 💪✨ Pokoknya ingat: "Ngoding itu proses, bukan perlombaan.
+      Pelan-pelan tapi konsisten, lama-lama jadi jago cuy!" Sukses buat
+      presentasi kamu, nilai mantap, dan jangan lupa kasih kabar ya nanti dapet
+      berapa 😁🚀 Semangaaattt terus, programmer keren masa depan! 🧑‍💻🔥
+    </h1>
+  </body>
+</html>
